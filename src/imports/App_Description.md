@@ -11,7 +11,7 @@ The app is organized around two primary ways of exploring content:
 
 Users can move from a broad overview into deeper detail as needed. For example, they can inspect an artist's profile to see a summary of the artist's background and a list of their albums, then drill into an individual album to view more detailed information. This makes the app useful for both casual discovery and more focused exploration.
 
-The product also supports full management of the catalog, not just browsing. Users can add new artists and albums, edit existing artist and album records, and remove albums, all through clear forms and confirmation dialogs, with feedback after actions are completed. These moments help make the interface feel more intentional and guided, rather than purely informational.
+The product also supports full management of the catalog, not just browsing. Users can add new artists and albums, edit existing artist and album records, and remove both albums and artists, all through clear forms and confirmation dialogs, with feedback after actions are completed. These moments help make the interface feel more intentional and guided, rather than purely informational.
 
 Overall, this application functions as a lightweight digital music catalog, showcase, and management tool. Its purpose is not just to display data, but to make a collection of artists and albums feel discoverable, memorable, and easy to explore, while also being easy to keep up to date. It is well suited for a product team that wants to present and maintain music-related content in a clean, browsable, and visually organized way.
 
@@ -20,10 +20,11 @@ Overall, this application functions as a lightweight digital music catalog, show
 **Artist**
 
 - Name
-- Country of origin
+- Country of origin (selected from a predefined country list; displays as a flag image and abbreviated country code)
 - Type: solo act or group
 - Number of group members (if applicable)
 - Active since (year)
+- Photo URL (used as the artist avatar; falls back to a color-coded initials circle if the image fails to load)
 - Associated albums (list)
 
 **Album**
@@ -41,18 +42,19 @@ Overall, this application functions as a lightweight digital music catalog, show
 
 ## Core Functionality
 
-- Browse all artists and browse all albums, each as its own top-level view
+- Browse all artists and browse all albums, each as its own top-level view with its own URL
 - View an artist's detail page, including a collapsible/expandable list of their albums
 - View an album's detail page with full details and a link back to the artist
-- Search, filter, and/or sort artists and albums (e.g., by name, era, country, or label) — the current version lacks this, and with hundreds of artists and over a thousand albums, some way to narrow the list is important for the catalog to feel browsable rather than overwhelming
+- Search, filter, and sort artists (by name or country, filtered by type or country) and albums (by title or artist name, filtered by certification or streaming platform)
 - Add a new artist, with a form covering all fields in the artist data model
 - Add a new album to an existing artist, with a form covering all fields in the album data model
-- Edit an existing artist's details
+- Edit an existing artist's details, including selecting their country from a dropdown (which displays a live flag image preview) and updating their photo URL
 - Edit an existing album's details
 - Delete an album, with a confirmation dialog before the action completes
-- Show feedback (e.g., a toast or inline confirmation) after add, edit, and delete actions complete
-
-Note: add and edit functionality is new for this version. The current build only supports browsing and deleting, so there are no reference screenshots for the add/edit forms or flows — these should be designed fresh, in a style consistent with the rest of the app (e.g., the existing delete-confirmation modal is a reasonable pattern to extend for add/edit confirmations).
+- Delete an artist, with a confirmation dialog that shows how many albums will also be removed; deleting an artist permanently removes all of their associated albums from the catalog
+  - The delete action is available from the All Artists view (via a button that appears on hover) and from the Artist detail page
+- Show toast notifications after every add, edit, and delete action completes
+- Toggle between a dark theme (deep near-black background, violet/pink accents) and a light theme (warm cream background, same accents) using a toggle in the header; the selected theme is persisted across sessions
 
 ## Visual Direction
 
@@ -68,10 +70,11 @@ If this description is being used as the basis for building a new version of the
 - The primary user goal is exploration: understanding artists, discovering albums, and learning about the music catalog in a pleasant and intuitive way — with the ability to keep the catalog current through adding and editing records.
 - The experience should feel visually rich enough to be engaging, but still simple and structured enough to be easy to navigate.
 - Users should be able to move from a broad overview to deeper detail without confusion.
-- The tone should feel modern, creative, and slightly immersive, with a strong sense of music and media presentation, leaning into a dark mode aesthetic.
+- The tone should feel modern, creative, and slightly immersive, with a strong sense of music and media presentation. A dark/light theme toggle lets users choose their preferred experience, with the choice persisted across sessions.
 - Key content should remain prominent: artist name, origin, era, album list, release year, label, sales, certifications, and streaming availability.
 - The interface should communicate personality through imagery, layout, and clear sectioning rather than through heavy explanation or complex interactions.
 - Management actions (add, edit, delete) should feel like a natural part of the experience, not a bolted-on admin panel.
+- Artist avatars should use real photos where available (sourced from Unsplash), with solo artists shown as individuals and groups shown as multiple people; a gradient initials fallback is displayed if the image fails to load.
 
 ## What the New App Should Prioritize
 
@@ -84,7 +87,7 @@ If this description is being used as the basis for building a new version of the
 
 ## Suggested Product Positioning
 
-This app should be framed as a stylish digital music catalog that helps users explore and maintain a fictional or curated collection of artists and albums in an engaging, approachable way. It should feel like a blend of a music streaming discovery experience (Amazon Music, Spotify, Apple Music) and a curated showcase, presented in a dark mode aesthetic.
+This app should be framed as a stylish digital music catalog that helps users explore and maintain a fictional or curated collection of artists and albums in an engaging, approachable way. It should feel like a blend of a music streaming discovery experience (Amazon Music, Spotify, Apple Music) and a curated showcase, available in both dark and light themes.
 
 ## Screenshots and Reference Assets
 
