@@ -42,8 +42,20 @@ interface ArtistAvatarProps {
   photoSource?: PhotoSource;
   className?: string;
   sizeClass?: string;
+  shape?: "circle" | "rounded-square" | "square";
   isDark?: boolean;
   textClassName?: string;
+}
+
+function initialsFontSize(sizeClass: string): string {
+  if (sizeClass.includes("202") || sizeClass.includes("[202")) return "text-[50px]";
+  if (sizeClass.includes("168") || sizeClass.includes("[168")) return "text-[42px]";
+  if (sizeClass.includes("80") || sizeClass.includes("[80")) return "text-[24px]";
+  if (sizeClass.includes("70") || sizeClass.includes("[70")) return "text-[20px]";
+  if (sizeClass.includes("64") || sizeClass.includes("[64")) return "text-[18px]";
+  if (sizeClass.includes("42") || sizeClass.includes("[42")) return "text-[13px]";
+  if (sizeClass.includes("40") || sizeClass.includes("[40")) return "text-[12px]";
+  return "text-[16px]";
 }
 
 export function ArtistAvatar({
@@ -52,6 +64,7 @@ export function ArtistAvatar({
   photoSource,
   className = "",
   sizeClass = "size-[56px]",
+  shape = "circle",
   isDark = true,
   textClassName,
 }: ArtistAvatarProps) {
@@ -65,16 +78,17 @@ export function ArtistAvatar({
   const showImage = Boolean(src) && !failed;
   const neutralBg = isDark ? "#1a1a26" : "#f0ebe2";
   const bg = showImage ? neutralBg : colorFromName(name);
-  const fontSize =
-    sizeClass.includes("168") || sizeClass.includes("[168")
-      ? "text-[42px]"
-      : sizeClass.includes("40") || sizeClass.includes("[40")
-        ? "text-[12px]"
-        : "text-[16px]";
+  const fontSize = initialsFontSize(sizeClass);
+  const shapeClass =
+    shape === "rounded-square"
+      ? "rounded-[24px]"
+      : shape === "square"
+        ? "rounded-none"
+        : "rounded-full";
 
   return (
     <div
-      className={`rounded-full shrink-0 overflow-hidden flex items-center justify-center ${sizeClass} ${className}`}
+      className={`${shapeClass} shrink-0 overflow-hidden flex items-center justify-center ${sizeClass} ${className}`}
       style={{ background: bg }}
       aria-label={name}
     >

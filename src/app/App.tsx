@@ -540,7 +540,7 @@ function ArtistsView({ artists, albums, onSelectArtist, onAddArtist, onEditArtis
                   </button>
                 </div>
                 <div className="flex items-start gap-[14px]">
-                  <ArtistAvatar name={artist.name} photo={artist.photo} photoSource={artist.photoSource} sizeClass="size-[56px]" isDark={isDark} />
+                  <ArtistAvatar name={artist.name} photo={artist.photo} photoSource={artist.photoSource} sizeClass="size-[70px]" isDark={isDark} />
                   <div className="flex-1 min-w-0 pr-[24px]">
                     <p className={`text-[14px] font-semibold leading-[1.3] truncate ${heading}`}>{artist.name}</p>
                     <div className="flex items-center gap-[5.25px] mt-[5.25px]">
@@ -708,7 +708,7 @@ function ArtistDetailView({ artist, albums, onBack, onSelectAlbum, onAddAlbum, o
 
         <div className={`border rounded-[14px] p-[21.8px] ${card}`}>
           <div className="flex items-start gap-[17.5px]">
-            <ArtistAvatar name={artist.name} photo={artist.photo} photoSource={artist.photoSource} sizeClass="size-[168px]" isDark={isDark} />
+            <ArtistAvatar name={artist.name} photo={artist.photo} photoSource={artist.photoSource} sizeClass="size-[202px]" shape="rounded-square" isDark={isDark} />
             <div className="flex-1 min-w-0">
               <h1 className={`text-[26.25px] leading-[31.5px] ${heading}`} style={{ fontFamily: "'Playfair Display',Georgia,serif", fontWeight: 700 }}>{artist.name}</h1>
               <div className="flex items-center gap-[10.5px] mt-[7px] flex-wrap">
@@ -1054,7 +1054,8 @@ function ArtistFormModal({
                 name={name.trim() || "Artist"}
                 photo={previewPhoto}
                 photoSource={photoSource}
-                sizeClass="size-[40px]"
+                sizeClass="size-[80px]"
+                shape="square"
                 isDark={isDark}
               />
             </div>
