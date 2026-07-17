@@ -13,6 +13,17 @@ export function artistInitials(name: string): string {
   return (parts[0][0] + parts[1][0]).toUpperCase();
 }
 
+/** Stable HSL background from name so initials circles vary without flicker. */
+export function colorFromName(name: string): string {
+  let hash = 0;
+  const key = name.trim().toLowerCase() || "?";
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+  }
+  const hue = hash % 360;
+  return `hsl(${hue}, 58%, 42%)`;
+}
+
 /** Resolve stored photo to a display URL. Empty string means show initials. */
 export function resolveArtistPhoto(
   photo: string,
@@ -52,8 +63,8 @@ export function ArtistAvatar({
   }, [src]);
 
   const showImage = Boolean(src) && !failed;
-  const bg = isDark ? "#1a1a26" : "#f0ebe2";
-  const initialsColor = isDark ? "text-[#a855f7]" : "text-[#9333ea]";
+  const neutralBg = isDark ? "#1a1a26" : "#f0ebe2";
+  const bg = showImage ? neutralBg : colorFromName(name);
   const fontSize =
     sizeClass.includes("168") || sizeClass.includes("[168")
       ? "text-[42px]"
@@ -76,7 +87,7 @@ export function ArtistAvatar({
         />
       ) : (
         <span
-          className={`font-semibold select-none ${fontSize} ${textClassName ?? initialsColor}`}
+          className={`font-semibold select-none text-[#f8fafc] ${fontSize} ${textClassName ?? ""}`}
         >
           {artistInitials(name)}
         </span>

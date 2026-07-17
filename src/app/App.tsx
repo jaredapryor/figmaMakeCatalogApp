@@ -932,7 +932,7 @@ function EditArtistModal({ artist, onClose, onSave }: EditArtistModalProps) {
   const [since, setSince] = useState(String(artist.since));
   const [photoSource, setPhotoSource] = useState<PhotoSource>(artist.photoSource ?? "local");
   const [localPhoto, setLocalPhoto] = useState(
-    artist.photoSource === "remote" ? DEFAULT_LOCAL_PHOTO : artist.photo || DEFAULT_LOCAL_PHOTO
+    artist.photoSource === "remote" ? DEFAULT_LOCAL_PHOTO : (artist.photo ?? "")
   );
   const [remotePhoto, setRemotePhoto] = useState(
     artist.photoSource === "remote" ? artist.photo : ""
@@ -1008,12 +1008,9 @@ function ArtistFormModal({
   const previewFlag = FLAG_MAP[countryCode];
   const previewPhoto = photoSource === "local" ? localPhoto : remotePhoto.trim();
   const accent = isDark ? "#a855f7" : "#9333ea";
-  const toggleActive = isDark
-    ? "bg-[rgba(168,85,247,0.25)] text-[#a855f7]"
-    : "bg-[rgba(147,51,234,0.15)] text-[#9333ea]";
-  const toggleIdle = isDark
-    ? "text-[#7070a0] hover:text-[#f2f2f8]"
-    : "text-[#78716c] hover:text-[#1c1917]";
+  const sourceBtn = isDark
+    ? "border-[rgba(255,255,255,0.08)] text-[#7070a0] hover:text-[#f2f2f8]"
+    : "border-[rgba(0,0,0,0.1)] text-[#78716c] hover:text-[#1c1917]";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto py-[21px]">
@@ -1030,25 +1027,17 @@ function ArtistFormModal({
           </div>
           <div>
             <label className={labelCls}>Artist Photo</label>
-            <div className={`flex gap-[4px] p-[3px] rounded-[8px] border mb-[8px] ${isDark ? "border-[rgba(255,255,255,0.08)] bg-[#1a1a26]" : "border-[rgba(0,0,0,0.1)] bg-[#f0ebe2]"}`}>
-              <button
-                type="button"
-                onClick={() => setPhotoSource("local")}
-                className={`flex-1 py-[6px] rounded-[6px] text-[11.5px] font-medium transition-colors ${photoSource === "local" ? toggleActive : toggleIdle}`}
-              >
-                Local
-              </button>
-              <button
-                type="button"
-                onClick={() => setPhotoSource("remote")}
-                className={`flex-1 py-[6px] rounded-[6px] text-[11.5px] font-medium transition-colors ${photoSource === "remote" ? toggleActive : toggleIdle}`}
-              >
-                Remote
-              </button>
-            </div>
             <div className="flex items-center gap-[10px]">
+              <button
+                type="button"
+                onClick={() => setPhotoSource(photoSource === "local" ? "remote" : "local")}
+                className={`shrink-0 flex items-center px-[11.3px] py-[8.75px] rounded-[10.5px] border text-[12.25px] font-medium transition-colors ${sourceBtn}`}
+              >
+                {photoSource === "local" ? "Local" : "Remote"}
+              </button>
               {photoSource === "local" ? (
                 <select value={localPhoto} onChange={(e) => setLocalPhoto(e.target.value)} className={`${inp} flex-1`}>
+                  <option value="">None</option>
                   {LOCAL_PHOTO_OPTIONS.map((opt) => (
                     <option key={opt.file} value={opt.file}>{opt.label}</option>
                   ))}
